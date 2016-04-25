@@ -2,7 +2,10 @@ eval "$(rbenv init -)"
 alias vpn='sudo ~/fix_vpn'
 alias ll='ls -l'
 
-#bash completion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then 
-  . $(brew --prefix)/etc/bash_completion
-fi
+# Git branch in prompt.
+
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+export PS1="\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "

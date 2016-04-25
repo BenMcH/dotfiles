@@ -1,3 +1,4 @@
+let mapleader=","
 syntax on
 
 set tabstop=2
@@ -33,9 +34,9 @@ set showmatch
 
 "search as you type and highlight it
 set incsearch
-set hlsearch
 
-"turn off highlighted search 
-nnoremap <leader><space> :nohlsearch<CR>
+map <leader>j <esc>0v$yddp
 
-
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
