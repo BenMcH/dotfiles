@@ -8,14 +8,15 @@ call vundle#begin()
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-bundler'
+Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-fugitive'
-Plugin 'easymotion/vim-easymotion'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/nerdtree'
+Plugin 'VundleVim/Vundle.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -26,7 +27,6 @@ syntax on
 set tabstop=2
 set shiftwidth=2
 set expandtab
-
 
 
 "case insensitive search but only when no capitals
@@ -59,14 +59,13 @@ set incsearch
 
 nnoremap <leader>j <esc>ddp
 nnoremap <leader>k <esc>ddk<s-p>
-nnoremap <up> <leader>k
-nnoremap <down> <leader>j
+nmap <up> <leader>k
+nmap <down> <leader>j
 nnoremap <left> <<
 nnoremap <right> >>
 
-" Quickly edit/reload the vimrc file
+" Quickly edit the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>rv :so $MYVIMRC<CR>
 nnoremap ; :
 
 " Don't make .swp files
@@ -79,6 +78,12 @@ if has('autocmd')
     autocmd!
     autocmd Filetype ruby set autoindent
   augroup end
+  augroup filetype_vim
+    autocmd!
+    " Source the vimrc when it is saved
+    autocmd BufWritePost $MYVIMRC :source $MYVIMRC |
+                                \ :AirlineRefresh
+  augroup end
 endif
 
 set statusline=%f         " Path to the file
@@ -87,4 +92,19 @@ set statusline+=FileType: " Label
 set statusline+=%y        " Filetype of the file
 set laststatus=2
 
+
 nnoremap <leader>o :NERDTreeToggle<CR>
+
+" Folding Options
+set foldmethod=indent
+set foldlevelstart=1
+
+" Space to toggle fold open/close
+nnoremap <space> za
+
+" 256 Color support
+set t_Co=256
+
+" Set bg color of folds to black
+highlight Folded ctermbg=16
+
