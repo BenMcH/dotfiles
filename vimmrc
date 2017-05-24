@@ -20,12 +20,6 @@ Plugin 'skwp/vim-rspec'
 Plugin 'tpope/vim-sensible'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'chrisbra/Colorizer'
-Plugin 'ervandew/supertab'
-Plugin 'suan/vim-instant-markdown'
-Plugin 'rosenfeld/rgrep.vim'
-Plugin 'takac/vim-hardtime'
-
-
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -45,13 +39,6 @@ set smartcase
 set confirm
 
 set visualbell
-
-let g:netrw_banner=0
-
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
 
 "line numbers
 set number
@@ -76,16 +63,12 @@ nnoremap <leader>j <esc>ddp
 nnoremap <leader>k <esc>ddk<s-p>
 nmap <up> <nop>
 nmap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-
-" Force vim to redraw if iterm/tmux clears the screen
-nnoremap <c-i> :redraw!<cr>
+nnoremap <left> <<
+nnoremap <right> >>
 
 " Quickly edit the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nnoremap ; :
-nnoremap : :
 
 " Don't make .swp files
 set nobackup
@@ -103,10 +86,6 @@ if has('autocmd')
     autocmd BufWritePost $MYVIMRC :source $MYVIMRC |
                                 \ :AirlineRefresh
   augroup end
-  augroup spaces  
-    autocmd!
-    autocmd BufWritePre * %s/\s\+$//e
-  augroup END  
 endif
 
 set statusline=%f         " Path to the file
@@ -140,25 +119,3 @@ nnoremap <leader>- :vertical resize -5<cr>
 nnoremap <leader>+ :vertical resize +5<cr>
 nnoremap <leader>0 :vertical resize 25<cr>
 nnoremap <leader>o :Lexplore<CR>:vertical resize 25<cr>
-
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
-nnoremap <leader>l :set invnumber invrelativenumber<cr>
-
-
-nnoremap <leader>model :-1read $HOME/.vim/.skeleton.model.rb<cr>ea<space>
-nnoremap <leader>cont :-1read $HOME/.vim/.skeleton.controller.rb<cr>ela
-
-set cursorline
-
-" This line sets up rgrep 
-set grepprg=grep\ -nrI\ --exclude-dir=target\ --exclude-dir=tmp\ --exclude-dir=log\ --exclude="*.min.js"\ --exclude="*.log"\ $*\ /dev/null
-
-" Setting up Vim Hardtime
-let g:hardtime_maxcount = 2
-let g:hardtime_allow_different_key = 1
-let g:hardtime_showmsg = 1
-let g:hardtime_default_on = 1
-

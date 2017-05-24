@@ -9,3 +9,8 @@ parse_git_branch() {
 }
 
 export PS1="\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+export PATH="/usr/local/mysql/bin:$PATH"
+
+alias b='bundle exec'

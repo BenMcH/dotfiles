@@ -1,10 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =8
-let g:netrw_dirhist_1='/Users/benmchone/dotfiles'
-let g:netrw_dirhist_2='/Users/benmchone/projects/boss/app/models'
-let g:netrw_dirhist_3='/Users/benmchone'
-let g:netrw_dirhist_4='/Users/benmchone/projects'
-let g:netrw_dirhist_5='/Users/benmchone/projects/boss'
-let g:netrw_dirhist_6='/Users/benmchone/projects/boss/app'
-let g:netrw_dirhist_7='/Users/benmchone/projects/boss/app/controllers'
-let g:netrw_dirhist_8='/Users/benmchone/dotfiles'
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/Users/benmchone/projects/boss/app/views'
+let g:netrw_dirhist_2='/Users/benmchone/projects/boss/app/views/reports'
+let g:netrw_dirhist_3='/Users/benmchone/projects/boss/app/views/reports/key_metrics'
+let g:netrw_dirhist_4='/Users/benmchone/projects/boss'
