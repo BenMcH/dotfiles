@@ -1,0 +1,14 @@
+[user]
+	name = Ben McHone
+	email = ben@mchone.dev
+[alias]
+	st = status
+	co = checkout
+	p = push -u origin HEAD
+	l = pull
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[protocol "file"]
+	allow = always

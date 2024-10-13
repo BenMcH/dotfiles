@@ -4,3 +4,4 @@ mkdir -p ~/.config/sway/
 
 stow starship
 stow sway
+stow git
