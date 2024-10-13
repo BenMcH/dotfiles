@@ -1,6 +1,8 @@
 #! /bin/env bash
 
+# Ensure folders are not complete symlinks
 mkdir -p ~/.config/sway/
+mkdir -p ~/.ssh/
 
 stow starship
 stow sway
