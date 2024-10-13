@@ -1,6 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/Users/benmchone/projects/boss/app/views'
-let g:netrw_dirhist_2='/Users/benmchone/projects/boss/app/views/reports'
-let g:netrw_dirhist_3='/Users/benmchone/projects/boss/app/views/reports/key_metrics'
-let g:netrw_dirhist_4='/Users/benmchone/projects/boss'
