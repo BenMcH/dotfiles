@@ -1,5 +1,8 @@
 #! /bin/env bash
 
+git submodule init
+git submodule update
+
 # Ensure folders are not complete symlinks
 mkdir -p ~/.config/sway/
 mkdir -p ~/.ssh/
