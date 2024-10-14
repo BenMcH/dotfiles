@@ -15,3 +15,4 @@ command -v aws > /dev/null && stow aws
 stow git
 stow ssh
 stow zsh
+stow tmux
