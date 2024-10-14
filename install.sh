@@ -8,10 +8,10 @@ mkdir -p ~/.config/sway/
 mkdir -p ~/.ssh/
 mkdir -p ~/.aws/
 
-stow starship
-stow sway
+command -v starship > /dev/null && stow starship
+command -v sway > /dev/null && stow sway
+command -v nvim > /dev/null && stow nvim
+command -v aws > /dev/null && stow aws
 stow git
-stow nvim
 stow ssh
 stow zsh
-stow aws
