@@ -13,7 +13,7 @@ command -v starship > /dev/null && stow --dotfiles starship
 
 command -v tmux > /dev/null && stow --dotfiles tmux
 
-command -v nvim > /dev/null && stow nvim
+command -v nvim > /dev/null && stow --dotfiles nvim
 
 if command -v aws > /dev/null; then
   mkdir -p ~/.aws/
