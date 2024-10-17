@@ -11,7 +11,7 @@ stow ssh
 stow zsh
 command -v starship > /dev/null && stow --dotfiles starship
 
-command -v tmux > /dev/null && stow tmux
+command -v tmux > /dev/null && stow --dotfiles tmux
 
 command -v nvim > /dev/null && stow nvim
 
