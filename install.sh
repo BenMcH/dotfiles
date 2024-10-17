@@ -9,9 +9,9 @@ mkdir -p ~/.ssh/
 stow git
 stow ssh
 stow zsh
+command -v starship > /dev/null && stow --dotfiles starship
 
 command -v tmux > /dev/null && stow tmux
-command -v starship > /dev/null && stow --dotfiles starship
 
 command -v nvim > /dev/null && stow nvim
 
