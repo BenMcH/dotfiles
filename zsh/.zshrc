@@ -101,7 +101,6 @@ alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 
 add_to_path_if_exists() {
   local dir="$1"
-  echo $dir
 
   if [ -d "$dir" ]; then
     export PATH="$dir:$PATH"
@@ -125,6 +124,8 @@ command -v "zoxide" > /dev/null && eval "$(zoxide init zsh)"
 
 if command -v "fnm" > /dev/null; then
     eval $(fnm env)
+    eval $(fnm completions)
+    alias nvm="fnm"
 else
     if [ -f /usr/share/nvm/init-nvm.sh ]; then
         echo "Activating nvm. You should consider fnm instead."
