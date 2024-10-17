@@ -17,7 +17,7 @@ command -v nvim > /dev/null && stow nvim
 
 if command -v aws > /dev/null; then
   mkdir -p ~/.aws/
-  stow aws
+  stow --dotfiles aws
 fi
 
 if [ $(uname) = "Linux" ]; then
