@@ -98,27 +98,46 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
-command -v "scrot" > /dev/null && alias screenshot="scrot -e 'xclip -selection clipboard -t image/png -i $f && rm $f'"
 
-export PATH=/opt/flutter/bin:$PATH
-export PATH=$HOME/go/bin:$PATH
-export PATH=$HOME/.cargo/bin/:$PATH
-export PATH=$HOME/.local/bin:$PATH
+add_to_path_if_exists() {
+  local dir="$1"
+  echo $dir
 
-export CHROME_EXECUTABLE=$(which chromium)
-export GOPATH=$(go env GOPATH)
+  if [ -d "$dir" ]; then
+    export PATH="$dir:$PATH"
+  fi
+}
+add_to_path_if_exists "/opt/flutter/bin"
+add_to_path_if_exists "$HOME/go/bin"
+add_to_path_if_exists "$HOME/.cargo/bin"
+add_to_path_if_exists "$HOME/.local/bin"
 
-if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-    export MOZ_ENABLE_WAYLAND=1
-fi
+export PYENV_ROOT="$HOME/.pyenv"
+add_to_path_if_exists "$PYENV_ROOT/bin"
+
+command -v "pyenv" > /dev/null && eval "$(pyenv init -)"
+
+command -v "chromium" > /dev/null && export CHROME_EXECUTABLE=$(which chromium)
+command -v "go" > /dev/null && export GOPATH=$(go env GOPATH)
 
 command -v "starship" > /dev/null && eval "$(starship init zsh)"
 command -v "zoxide" > /dev/null && eval "$(zoxide init zsh)"
 
-if [ -f /usr/share/nvm/init-nvm.sh ]; then
-    source /usr/share/nvm/init-nvm.sh
+if command -v "fnm" > /dev/null; then
+    eval $(fnm env)
+else
+    if [ -f /usr/share/nvm/init-nvm.sh ]; then
+        echo "Activating nvm. You should consider fnm instead."
+        source /usr/share/nvm/init-nvm.sh
+    fi
 fi
 
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-command -v "pyenv" > /dev/null && eval "$(pyenv init -)"
+if [ $(uname) = "Linux" ]; then
+    if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+        export MOZ_ENABLE_WAYLAND=1
+    fi
+
+    command -v "scrot" > /dev/null && alias screenshot="scrot -e 'xclip -selection clipboard -t image/png -i $f && rm $f'"
+fi
+
+
