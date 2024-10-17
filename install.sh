@@ -6,7 +6,7 @@ git submodule update
 # Ensure folders are not complete symlinks
 mkdir -p ~/.ssh/
 
-stow git
+stow --dotfiles git
 stow --dotfiles ssh
 stow --dotfiles zsh
 command -v starship > /dev/null && stow --dotfiles starship
