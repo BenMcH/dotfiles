@@ -8,7 +8,7 @@ mkdir -p ~/.ssh/
 
 stow git
 stow ssh
-stow zsh
+stow --dotfiles zsh
 command -v starship > /dev/null && stow --dotfiles starship
 
 command -v tmux > /dev/null && stow --dotfiles tmux
