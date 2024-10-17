@@ -7,7 +7,7 @@ git submodule update
 mkdir -p ~/.ssh/
 
 stow git
-stow ssh
+stow --dotfiles ssh
 stow --dotfiles zsh
 command -v starship > /dev/null && stow --dotfiles starship
 
