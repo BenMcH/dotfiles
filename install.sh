@@ -28,6 +28,6 @@ if [ $(uname) = "Linux" ]; then
   
   if command -v sway > /dev/null; then
     mkdir -p ~/.config/sway/
-    stow sway
+    stow --dotfiles sway
   fi
 fi
