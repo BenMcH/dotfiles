@@ -23,7 +23,7 @@ fi
 if [ $(uname) = "Linux" ]; then
   if command -v xfce4-terminal > /dev/null; then
     mkdir -p ~/.local/share/xfce4/terminal/colorschemes
-    command -v xfce4-terminal > /dev/null && stow xfce4-terminal
+    stow --dotfiles xfce4-terminal
   fi
   
   if command -v sway > /dev/null; then
