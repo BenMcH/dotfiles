@@ -13,10 +13,10 @@ command -v tmux > /dev/null && stow --dotfiles --no-folding tmux
 
 command -v nvim > /dev/null && stow --dotfiles --no-folding nvim
 
-if command -v aws > /dev/null; then
-  mkdir -p ~/.aws/
-  stow --dotfiles aws
-fi
+# if command -v aws > /dev/null; then
+#   mkdir -p ~/.aws/
+#   stow --dotfiles aws
+# fi
 
 if [ $(uname) = "Linux" ]; then
   if command -v xfce4-terminal > /dev/null; then
