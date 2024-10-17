@@ -1,5 +1,3 @@
-#! /bin/env zsh
-
 git submodule init
 git submodule update
 
@@ -11,9 +9,9 @@ stow --dotfiles ssh
 stow --dotfiles zsh
 command -v starship > /dev/null && stow --dotfiles starship
 
-command -v tmux > /dev/null && stow --dotfiles tmux
+command -v tmux > /dev/null && stow --dotfiles --no-folding tmux
 
-command -v nvim > /dev/null && stow --dotfiles nvim
+command -v nvim > /dev/null && stow --dotfiles --no-folding nvim
 
 if command -v aws > /dev/null; then
   mkdir -p ~/.aws/

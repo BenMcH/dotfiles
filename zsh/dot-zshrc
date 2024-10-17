@@ -110,6 +110,7 @@ add_to_path_if_exists "/opt/flutter/bin"
 add_to_path_if_exists "$HOME/go/bin"
 add_to_path_if_exists "$HOME/.cargo/bin"
 add_to_path_if_exists "$HOME/.local/bin"
+add_to_path_if_exists "/usr/local/opt/dotnet@6/bin"
 
 export PYENV_ROOT="$HOME/.pyenv"
 add_to_path_if_exists "$PYENV_ROOT/bin"
@@ -126,6 +127,7 @@ if command -v "fnm" > /dev/null; then
     eval $(fnm env)
     eval $(fnm completions)
     alias nvm="fnm"
+    export FNM_RESOLVE_ENGINES=true
 else
     if [ -f /usr/share/nvm/init-nvm.sh ]; then
         echo "Activating nvm. You should consider fnm instead."
@@ -141,4 +143,7 @@ if [ $(uname) = "Linux" ]; then
     command -v "scrot" > /dev/null && alias screenshot="scrot -e 'xclip -selection clipboard -t image/png -i $f && rm $f'"
 fi
 
-
+if [ $(uname) = "Darwin" ]; then
+    . /opt/homebrew/opt/asdf/libexec/asdf.sh
+    export DOCKER_HOST="unix:///Users/bmchone/.colima/default/docker.sock"
+fi

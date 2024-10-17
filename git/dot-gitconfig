@@ -1,14 +1,46 @@
+
+# This is Git's per-user configuration file.
 [user]
 	name = Ben McHone
 	email = ben@mchone.dev
-[alias]
-	st = status
-	co = checkout
-	p = push -u origin HEAD
-	l = pull
+
 [init]
 	defaultBranch = main
+
+[alias]
+	co = checkout
+	st = status
+	p = push
+	l = pull
+	main = "!f() { if git ls-remote --exit-code --heads origin master >/dev/null 2>&1; then git checkout master; else git checkout main; fi; }; f"
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[branch]
+	sort = -committerdate
+
+[push]
+	autoSetupRemote = true
+
 [pull]
 	rebase = true
+
+[rerere]
+	enabled = true
+
+[help]
+	autocorrect = 1
+
+[diff]
+	algorithm = histogram
+
 [protocol "file"]
 	allow = always
+
+[includeIf "gitdir:~/projects/"]
+	path = .gitconfig-work
+
