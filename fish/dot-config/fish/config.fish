@@ -9,6 +9,7 @@ function command_exists -a "command"
 end
 
 if status is-interactive
+    set -g fish_greeting
     fish_config theme choose "Dracula Official"
     set -gx PAGER bat
     command_exists "nvim" && set -gx EDITOR nvim
