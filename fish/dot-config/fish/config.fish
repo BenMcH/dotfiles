@@ -1,7 +1,7 @@
 if status is-interactive
     set -g fish_greeting
     fish_config theme choose "Dracula Official"
-    set -gx PAGER bat
+    command_exists "bat" && set -gx PAGER "bat -p"
     command_exists "nvim" && set -gx EDITOR nvim
 
     add_to_path_if_exists "/opt/flutter/bin"
@@ -20,6 +20,7 @@ if status is-interactive
 
     command_exists "starship" && starship init fish | source
     command_exists "zoxide" && zoxide init fish | source
+    command_exists "lsd" && abbr ls "lsd"
 
     if command_exists "fnm"
         fnm env | source
