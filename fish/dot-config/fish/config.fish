@@ -1,13 +1,3 @@
-function add_to_path_if_exists -a "to_check"
-    if test -d $to_check
-        set -gx PATH "$to_check:$PATH"
-    end
-end
-
-function command_exists -a "command"
-    command -v $command > /dev/null
-end
-
 if status is-interactive
     set -g fish_greeting
     fish_config theme choose "Dracula Official"
