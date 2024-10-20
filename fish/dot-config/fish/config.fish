@@ -1,13 +1,16 @@
 function add_to_path_if_exists -a "to_check"
     if test -d $to_check
-        set PATH "$to_check:$PATH"
+        set -gx PATH "$to_check:$PATH"
     end
 end
 
+function command_exists -a "command"
+    command -v $command > /dev/null
+end
+
 if status is-interactive
-    # Commands to run in interactive sessions can go here
-    set PAGER bat
-    set EDITOR nvim
+    set -gx PAGER bat
+    command_exists "nvim" && set -gx EDITOR nvim
 
     add_to_path_if_exists "/opt/flutter/bin"
     add_to_path_if_exists "$HOME/go/bin"
@@ -15,22 +18,22 @@ if status is-interactive
     add_to_path_if_exists "$HOME/.local/bin"
     add_to_path_if_exists "/usr/local/opt/dotnet@6/bin"
 
-    set PYENV_ROOT "$HOME/.pyenv"
+    set -gx PYENV_ROOT "$HOME/.pyenv"
     add_to_path_if_exists "$PYENV_ROOT/bin"
 
-    command -v "pyenv" > /dev/null && eval "$(pyenv init -)"
+    command_exists "pyenv" && eval "$(pyenv init -)"
 
-    command -v "chromium" > /dev/null && set CHROME_EXECUTABLE $(which chromium)
-    command -v "go" > /dev/null && set GOPATH $(go env GOPATH)
+    command_exists "chromium" && set -gx CHROME_EXECUTABLE $(which chromium)
+    command_exists "go" && set -gx GOPATH $(go env GOPATH)
 
-    command -v "starship" > /dev/null && starship init fish | source
-    command -v "zoxide" > /dev/null && zoxide init fish | source
+    command_exists "starship" && starship init fish | source
+    command_exists "zoxide" && zoxide init fish | source
 
-    if command -v "fnm" > /dev/null
+    if command_exists "fnm"
         fnm env | source
         fnm completions | source
         abbr nvm fnm
-        set FNM_RESOLVE_ENGINES true
+        set -gx FNM_RESOLVE_ENGINES true
     else
         if test -f /usr/share/nvm/init-nvm.sh
             echo "Activating nvm. You should consider fnm instead."
@@ -40,14 +43,14 @@ if status is-interactive
 
     if test (uname) = "Linux" 
         if test "$XDG_SESSION_TYPE" = "wayland"
-            set MOZ_ENABLE_WAYLAND 1
+            set -gx MOZ_ENABLE_WAYLAND 1
         end
 
-        # command -v "scrot" > /dev/null && alias screenshot="scrot -e 'xclip -selection clipboard -t image/png -i $f && rm $f'"
+        # command_exists "scrot" && alias screenshot="scrot -e 'xclip -selection clipboard -t image/png -i $f && rm $f'"
     end
 
-    if [ $(uname) = "Darwin" ]; then
-         /opt/homebrew/opt/asdf/libexec/asdf.sh
-        set DOCKER_HOST "unix:///Users/bmchone/.colima/default/docker.sock"
+    if test (uname) = "Darwin"
+        . /opt/homebrew/opt/asdf/libexec/asdf.sh
+        set -gx DOCKER_HOST "unix:///Users/bmchone/.colima/default/docker.sock"
     end
 end
