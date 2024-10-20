@@ -7,6 +7,7 @@ mkdir -p ~/.ssh/
 stow --dotfiles git
 stow --dotfiles ssh
 stow --dotfiles zsh
+stow --dotfiles --no-folding fish
 command -v starship > /dev/null && stow --dotfiles starship
 
 command -v tmux > /dev/null && stow --dotfiles --no-folding tmux
