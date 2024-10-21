@@ -4,7 +4,6 @@ add_newline = false
 disabled = true
 
 [shell]
-zsh_indicator = '🇿 '
 fish_indicator = '󰈺 '
 powershell_indicator = '_'
 unknown_indicator = 'mystery shell'
