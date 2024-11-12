@@ -11,3 +11,6 @@ command_exists "zoxide" && zoxide init fish | source
 command_exists "lsd" && abbr ls "lsd"
 command_exists "fnm" && abbr nvm fnm
 
+if test -f /opt/asdf-vm/asdf.fish
+    source /opt/asdf-vm/asdf.fish
+end
