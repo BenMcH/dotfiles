@@ -9,3 +9,6 @@ powershell_indicator = '_'
 unknown_indicator = 'mystery shell'
 style = 'cyan'
 disabled = false
+
+[package]
+disabled = true
