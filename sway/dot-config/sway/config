@@ -23,6 +23,8 @@ font pango:noto sans,sans-serif,monospace 12
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 
+exec --no-startup-id wl-paste --watch cliphist store
+
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
@@ -47,6 +49,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
+
+bindsym Print exec --no-startup-id slurp | grim -g - - | wl-copy
+bindsym $mod+Shift+v exec cliphist list | fuzzel -d | cliphist decode | wl-copy && sleep 1 && wl-paste
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
