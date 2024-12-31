@@ -60,9 +60,6 @@ floating_modifier $mod
 # or left-clicking anywhere into the window while holding the floating modifier.
 # tiling_drag modifier titlebar
 
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-
 bindsym $mod+i exec rofimoji
 
 # kill focused window
@@ -174,7 +171,7 @@ bindsym $mod+Shift+e exec "sway exit"
 # Shutdown
 bindsym $mod+Shift+escape exec "shutdown now"
 
-bindsym $mod+Shift+Return exec "xfce4-terminal"
+bindsym $mod+Shift+Return exec "ghostty"
 bindsym $mod+Tab workspace back_and_forth
 
 
