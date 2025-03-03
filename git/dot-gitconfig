@@ -4,6 +4,11 @@
 	name = Ben McHone
 	email = ben@mchone.dev
 
+[core]
+	excludesfile = ~/.gitignore
+	fsmonitor = true
+	untrackedCache = true
+
 [init]
 	defaultBranch = main
 
@@ -24,20 +29,39 @@
 [branch]
 	sort = -committerdate
 
+[commit]
+	verbose = true
+
+[tag]
+	sort = version:refnam
+
+[column]
+	ui = auto
+
 [push]
 	autoSetupRemote = true
+	followTags = true
+
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
 
 [pull]
 	rebase = true
 
 [rerere]
 	enabled = true
+	autoupdate = true
 
 [help]
-	autocorrect = 1
+	autocorrect = prompt
 
 [diff]
 	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
 
 [protocol "file"]
 	allow = always
@@ -45,3 +69,9 @@
 [includeIf "gitdir:~/projects/"]
 	path = .gitconfig-work
 
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[merge]
+	conflictstyle = zdiff3
