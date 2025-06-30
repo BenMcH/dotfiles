@@ -218,6 +218,8 @@ input * {
     natural_scroll enabled
 }
 
+input type:touchpad drag_lock disable
+
 output eDP-1 {
     background ~/.config/sway/wallpaper.png fill
     resolution 1920x1080
