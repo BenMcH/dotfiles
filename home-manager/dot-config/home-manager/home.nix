@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
   home.username = "mchone";
   home.homeDirectory = "/home/mchone";
 
@@ -15,12 +13,18 @@
   # release notes.
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+  
+  home.packages = with pkgs; [
+    # Utils
+    bat
+    btop
+    entr
+    fd
+    htop
+    lsd
+    ripgrep
+    zoxide # Frecency based directory navigation
+    
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
