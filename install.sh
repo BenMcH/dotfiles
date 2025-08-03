@@ -36,3 +36,11 @@ if [ $(uname) = "Linux" ]; then
     _stow sway
   fi
 fi
+
+echo "Run 'home-manager switch' to apply changes? [Y/n]"
+read -r answer
+if [[ $answer =~ ^[Yy]$ || -z $answer ]]; then
+  home-manager switch
+else
+  echo "You can run 'home-manager switch' later to apply changes."
+fi
