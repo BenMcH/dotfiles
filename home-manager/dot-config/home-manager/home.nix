@@ -97,4 +97,81 @@
       };
     };
   };
+
+  programs.git = {
+    enable = true;
+
+    userName = "Ben McHone";
+    userEmail = "ben@mchone.dev";
+
+    extraConfig = {
+      core = {
+        excludesfile = "~/.gitignore";
+        fsmonitor = true;
+        untrackedCache = true;
+      };
+
+      init.defaultBranch = "main";
+
+      alias = {
+        co = "checkout";
+        st = "status";
+        p = "push";
+        l = "pull";
+        main = ''!f() { if git ls-remote --exit-code --heads origin master >/dev/null 2>&1; then git checkout master; else git checkout main; fi; }; f'';
+        dad = "!curl -H 'Accept: text/plain' https://icanhazdadjoke.com";
+      };
+
+      "filter \"lfs\"" = {
+        clean = "git-lfs clean -- %f";
+        smudge = "git-lfs smudge -- %f";
+        process = "git-lfs filter-process";
+        required = true;
+      };
+
+      branch.sort = "-committerdate";
+      commit.verbose = true;
+      tag.sort = "version:refname";
+      column.ui = "auto";
+
+      push = {
+        autoSetupRemote = true;
+        followTags = true;
+      };
+
+      fetch = {
+        prune = true;
+        pruneTags = true;
+        all = true;
+      };
+
+      pull.rebase = true;
+
+      rerere = {
+        enabled = true;
+        autoupdate = true;
+      };
+
+      help.autocorrect = "prompt";
+
+      diff = {
+        algorithm = "histogram";
+        colorMoved = "plain";
+        mnemonicPrefix = true;
+        renames = true;
+      };
+
+      "protocol \"file\"".allow = "always";
+
+      "includeIf \"gitdir:~/projects/\"".path = ".gitconfig-work";
+
+      rebase = {
+        autoSquash = true;
+        autoStash = true;
+        updateRefs = true;
+      };
+
+      merge.conflictstyle = "zdiff3";
+    };
+  };
 }
