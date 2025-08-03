@@ -14,7 +14,6 @@ _stow home-manager
 _stow ssh
 _stow zsh
 _stow fish
-_stow fuzzel
 _stow rofimoji
 
 command -v tmux > /dev/null && _stow tmux
