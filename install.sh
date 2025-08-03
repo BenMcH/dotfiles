@@ -9,13 +9,14 @@ _stow () {
 # Ensure folders are not complete symlinks
 mkdir -p ~/.ssh/
 
+_stow home-manager
+
 _stow git
 _stow ssh
 _stow zsh
 _stow fish
 _stow fuzzel
 _stow rofimoji
-command -v starship > /dev/null && _stow starship
 
 command -v tmux > /dev/null && _stow tmux
 
