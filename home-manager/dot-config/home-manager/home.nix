@@ -73,31 +73,18 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  
-  programs.starship = {
+
+  programs.awscli = {
     enable = true;
-    # Configuration written to ~/.config/starship.toml
+
     settings = {
-      add_newline = false;
-
-      aws = {
-        disabled = true;
-      };
-
-      shell = {
-        fish_indicator = "󰈺 ";
-        powershell_indicator = "_";
-        unknown_indicator = "mystery shell";
-        style = "cyan";
-        disabled = false;
-      };
-
-      package = {
-        disabled = true;
+      default = {
+        region = "us-east-2";
+        output = "json";
       };
     };
   };
-
+  
   programs.git = {
     enable = true;
 
@@ -172,6 +159,30 @@
       };
 
       merge.conflictstyle = "zdiff3";
+    };
+  };
+  
+  programs.starship = {
+    enable = true;
+    # Configuration written to ~/.config/starship.toml
+    settings = {
+      add_newline = false;
+
+      aws = {
+        disabled = true;
+      };
+
+      shell = {
+        fish_indicator = "󰈺 ";
+        powershell_indicator = "_";
+        unknown_indicator = "mystery shell";
+        style = "cyan";
+        disabled = false;
+      };
+
+      package = {
+        disabled = true;
+      };
     };
   };
 }

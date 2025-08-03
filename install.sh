@@ -21,11 +21,6 @@ command -v tmux > /dev/null && _stow tmux
 
 command -v nvim > /dev/null && _stow nvim
 
-# if command -v aws > /dev/null; then
-#   mkdir -p ~/.aws/
-#   _stow aws
-# fi
-
 if [ $(uname) = "Linux" ]; then
   if command -v xfce4-terminal > /dev/null; then
     _stow xfce4-terminal
