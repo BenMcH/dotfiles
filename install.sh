@@ -11,7 +11,6 @@ mkdir -p ~/.ssh/
 
 _stow home-manager
 
-_stow ssh
 _stow zsh
 _stow fish
 _stow rofimoji

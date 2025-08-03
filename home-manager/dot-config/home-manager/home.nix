@@ -161,6 +161,33 @@
       merge.conflictstyle = "zdiff3";
     };
   };
+
+  programs.ssh = {
+    enable = true;
+
+    extraConfig = ''
+      IgnoreUnknown UseKeychain
+      AddKeysToAgent yes
+      UseKeychain yes
+      ForwardAgent yes
+
+      Include /Users/bmchone/.colima/ssh_config
+      Include config/*
+    '';
+
+    matchBlocks = {
+      "pi" = {
+        hostname = "192.168.86.43";
+        user = "ubuntu";
+      };
+
+      "*" = {
+        setEnv = {
+          TERM = "xterm-256color";
+        };
+      };
+    };
+  };
   
   programs.starship = {
     enable = true;
