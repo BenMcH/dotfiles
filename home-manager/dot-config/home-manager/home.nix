@@ -283,4 +283,6 @@
       }
     ];
   };
+
+  programs.uv.enable = true;
 }
