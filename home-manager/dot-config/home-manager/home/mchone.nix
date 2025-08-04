@@ -1,11 +1,11 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, username, homeDirectory, ... }:
 
 let
   linuxPkgs = import ./linux.nix { inherit config pkgs; };
 in
 {
   home.username = username;
-  home.homeDirectory = "/home/mchone";
+  home.homeDirectory = homeDirectory;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

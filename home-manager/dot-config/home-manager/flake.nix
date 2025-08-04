@@ -15,13 +15,14 @@
         config.allowUnfree = true;
       };
       username = "mchone";
+      homeDirectory = "/home/mchone"
     in {
       homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
           ./home/${username}.nix
         ];
-        extraSpecialArgs = { inherit username; };
+        extraSpecialArgs = { inherit username homeDirectory; };
       };
     };
 }
