@@ -18,12 +18,15 @@
     # Utils
     bat
     btop
+    duckdb
     entr
     fd
+    github-cli
     htop
     lsd
     ripgrep
     rofimoji # Emoji selector (integrated with fuzzel)
+    yt-dlp
     zoxide # Frecency based directory navigation
     
 
