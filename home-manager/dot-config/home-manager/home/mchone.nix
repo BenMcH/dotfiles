@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
-  home.username = "mchone";
+  home.username = username;
   home.homeDirectory = "/home/mchone";
 
   # This value determines the Home Manager release that your configuration is
@@ -49,9 +49,9 @@
       selector = fuzzel
     '';
 
-    ".config/sway/config".source = ../../../sway/config;
-    ".config/sway/wallpaper.png".source = ../../../sway/wallpaper.png;
-    ".config/i3status.conf".source = ../../../sway/i3status.conf;
+    ".config/sway/config".source = ../../../../sway/config;
+    ".config/sway/wallpaper.png".source = ../../../../sway/wallpaper.png;
+    ".config/i3status.conf".source = ../../../../sway/i3status.conf;
   };
 
   # Home Manager can also manage your environment variables through
