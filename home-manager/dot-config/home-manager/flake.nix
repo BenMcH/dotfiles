@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration for mchone on Arch";
+  description = "Home Manager configuration for multiple systems";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -9,20 +9,61 @@
 
   outputs = { self, nixpkgs, home-manager, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
+      # Define system configurations
+      systems = {
+        "x86_64-linux" = {
+          users = {
+            mchone = {
+              homeDirectory = "/home/mchone";
+              modules = [ ./home/mchone.nix ];
+            };
+          };
+        };
+        "aarch64-darwin" = {
+          users = {
+            bmchone = {
+              homeDirectory = "/Users/bmchone";
+              modules = [ ./home/mchone.nix ];
+            };
+          };
+        };
       };
-      username = "mchone";
-      homeDirectory = "/home/mchone"
+
+      # Function to create a home configuration for a specific system and user
+      mkHomeConfiguration = system: username: userConfig:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+        in
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = userConfig.modules;
+          extraSpecialArgs = {
+            inherit username system;
+            homeDirectory = userConfig.homeDirectory;
+          };
+        };
+
+      # Generate all home configurations
+      homeConfigurations = builtins.listToAttrs (
+        builtins.concatLists (
+          builtins.attrValues (
+            builtins.mapAttrs (system: systemConfig:
+              builtins.attrValues (
+                builtins.mapAttrs (username: userConfig:
+                  {
+                    name = "${username}@${system}";
+                    value = mkHomeConfiguration system username userConfig;
+                  }
+                ) systemConfig.users
+              )
+            ) systems
+          )
+        )
+      );
     in {
-      homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./home/${username}.nix
-        ];
-        extraSpecialArgs = { inherit username homeDirectory; };
-      };
+      inherit homeConfigurations;
     };
 }
