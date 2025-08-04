@@ -13,7 +13,6 @@ _stow home-manager
 
 _stow zsh
 _stow fish
-_stow rofimoji
 
 command -v tmux > /dev/null && _stow tmux
 

@@ -23,6 +23,7 @@
     htop
     lsd
     ripgrep
+    rofimoji # Emoji selector (integrated with fuzzel)
     zoxide # Frecency based directory navigation
     
 
@@ -53,6 +54,10 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    ".config/rofimoji.rc".text = ''
+      selector = fuzzel
+    '';
   };
 
   # Home Manager can also manage your environment variables through
