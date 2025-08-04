@@ -22,10 +22,6 @@ if [ $(uname) = "Linux" ]; then
   if command -v xfce4-terminal > /dev/null; then
     _stow xfce4-terminal
   fi
-  
-  if command -v sway > /dev/null; then
-    _stow sway
-  fi
 fi
 
 echo "Run 'home-manager switch' to apply changes? [Y/n]"

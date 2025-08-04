@@ -58,6 +58,10 @@
     ".config/rofimoji.rc".text = ''
       selector = fuzzel
     '';
+
+    ".config/sway/config".source = ../../../sway/config;
+    ".config/sway/wallpaper.png".source = ../../../sway/wallpaper.png;
+    ".config/i3status.conf".source = ../../../sway/i3status.conf;
   };
 
   # Home Manager can also manage your environment variables through
