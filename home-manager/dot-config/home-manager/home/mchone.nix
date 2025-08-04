@@ -1,5 +1,8 @@
 { config, pkgs, username, ... }:
 
+let
+  linuxPkgs = import ./linux.nix { inherit config pkgs; };
+in
 {
   home.username = username;
   home.homeDirectory = "/home/mchone";
@@ -17,7 +20,6 @@
   home.packages = with pkgs; [
     # Utils
     bat
-    btop
     duckdb
     entr
     fd
@@ -25,11 +27,9 @@
     htop
     lsd
     ripgrep
-    rofimoji # Emoji selector (integrated with fuzzel)
     yt-dlp
     zoxide # Frecency based directory navigation
     
-
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -42,7 +42,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-  ];
+  ] ++ linuxPkgs.pkgs;
 
   home.file = {
     ".config/rofimoji.rc".text = ''
