@@ -14,8 +14,6 @@ _stow home-manager
 _stow zsh
 _stow fish
 
-command -v tmux > /dev/null && _stow tmux
-
 command -v nvim > /dev/null && _stow nvim
 
 if [ $(uname) = "Linux" ]; then

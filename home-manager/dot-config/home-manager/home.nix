@@ -242,4 +242,42 @@
       };
     };
   };
+
+  programs.tmux = {
+    enable = true;
+    terminal = "screen-256color";
+    prefix = "C-b";
+    extraConfig = ''
+      unbind r
+      bind r source-file ~/.config/tmux/tmux.conf
+
+      setw -g mode-keys vi
+
+      bind-key h select-pane -L
+      bind-key j select-pane -D
+      bind-key k select-pane -U
+      bind-key l select-pane -R
+
+      set -s copy-command 'wl-copy'
+      if-shell "uname | grep -q Darwin" "set -s copy-command 'pbcopy'"
+
+      set -g @dracula-show-powerline false
+      set -g @dracula-show-flags true
+      set -g @dracula-plugins "git time"
+      set -g @dracula-show-left-icon session
+      set -g status-position top
+    '';
+
+    plugins = with pkgs.tmuxPlugins; [
+      sensible
+      {
+        plugin = dracula;
+        extraConfig = "";
+      }
+      {
+        plugin = vim-tmux-navigator;
+        extraConfig = "";
+      }
+    ];
+  };
 }
