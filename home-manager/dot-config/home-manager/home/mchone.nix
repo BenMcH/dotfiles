@@ -276,4 +276,70 @@ in
   };
 
   programs.uv.enable = true;
+
+  programs.fish = {
+    enable = true;
+
+    shellAliases = {
+      "docker-stop-all" = "docker stop $(docker ps -q)";
+    };
+
+    functions = {
+      "add_to_path_if_exists" = {
+        body = ''
+          if test -d "$to_check"
+            fish_add_path "$to_check"
+          end
+        '';
+        argumentNames = [ "to_check" ];
+      };
+
+      "ssh" = ''
+        function ssh
+            if test -z "$SSH_AGENT_PID"
+                eval $(ssh-agent -c)
+                ssh-add ~/.ssh/id_rsa
+                ssh-add ~/.ssh/id_ed25519
+            end
+
+            command ssh $argv
+        end
+      '';
+
+      "command_exists" = ''
+          command -v $argv[1] >/dev/null
+      '';
+
+      "docker-clean" = ''
+        docker-stop-all
+        docker rm $(docker ps -aq)
+      '';
+
+      "mkcd" = ''
+          mkdir -p "$argv[1]"
+          cd "$argv[1]"
+      '';
+
+      "fnm" = ''
+        if command_exists fnm
+          if test -z "$FNM_DIR"
+            command fnm env | source
+            command fnm completions | source
+            set -gx FNM_RESOLVE_ENGINES true
+          end
+        end
+        command "fnm" $argv
+      '';
+
+      "node" = ''
+        if command_exists "fnm" && test -z "$FNM_DIR"
+            # Load fnm
+            fnm --help > /dev/null
+        end
+
+        command node $argv
+      '';
+
+    };
+  };
 }
