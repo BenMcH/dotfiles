@@ -72,6 +72,10 @@ in
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
+    PAGER = "bat -p";
+    EDITOR = "nvim";
+    CHROME_EXECUTABLE = "${pkgs.chromium}/bin/chromium";
+    GOPAH = "${pkgs.go}/lib/go";
   };
 
   # Let Home Manager install and manage itself.
@@ -339,7 +343,50 @@ in
 
         command node $argv
       '';
+    
+      "venv" = ''
+        if test -n "$VIRTUAL_ENV"
+            deactivate
+            echo "Deactivated old venv"
+        end
 
+        if test -f ./.venv/bin/activate.fish
+            . ./.venv/bin/activate.fish
+        else if test -f ../.venv/bin/activate.fish
+            . ../.venv/bin/activate.fish
+        else
+            echo "No .venv found in this folder or up a level"
+            return
+        end
+
+        echo "Activated venv"
+      '';
+    };
+
+    interactiveShellInit = ''
+      set -g fish_greeting
+
+      if test -n "$XDG_SESSION_TYPE" && test "$XDG_SESSION_TYPE" = "wayland"
+          set -gx MOZ_ENABLE_WAYLAND 1
+      end
+
+      if test (uname) = 'Darwin'
+        source /opt/homebrew/opt/asdf/libexec/asdf.fish
+        set -gx DOCKER_HOST "unix:///Users/bmchone/.colima/default/docker.sock"
+      end
+
+      add_to_path_if_exists "$HOME/go/bin"
+      add_to_path_if_exists "$HOME/.cargo/bin"
+      add_to_path_if_exists "$HOME/.local/bin"
+
+      starship init fish | source
+      zoxide init fish | source
+    '';
+
+    shellAbbrs = {
+      ls = "lsd";
+      nvm = "fnm";
+      "fish-reload" = "source ~/.config/fish/config.fish";
     };
   };
 }
