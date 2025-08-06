@@ -94,6 +94,13 @@ in
     userName = "Ben McHone";
     userEmail = "ben@mchone.dev";
 
+    includes = [
+      {
+        condition = "gitdir:~/projects/";
+        path = ".gitconfig-work";
+      }
+    ];
+
     extraConfig = {
       core = {
         excludesfile = "~/.gitignore";
@@ -152,8 +159,6 @@ in
       };
 
       "protocol \"file\"".allow = "always";
-
-      "includeIf \"gitdir:~/projects/\"".path = ".gitconfig-work";
 
       rebase = {
         autoSquash = true;
