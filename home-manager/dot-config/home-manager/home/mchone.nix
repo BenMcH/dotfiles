@@ -130,10 +130,9 @@ in
   #  /etc/profiles/per-user/mchone/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
     PAGER = "bat -p";
     EDITOR = "nvim";
-    CHROME_EXECUTABLE = "${pkgs.chromium}/bin/chromium";
+    # CHROME_EXECUTABLE = "${pkgs.chromium}/bin/chromium";
     GOPAH = "${pkgs.go}/lib/go";
   };
 
