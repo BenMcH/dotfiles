@@ -20,13 +20,21 @@ in
   home.packages = with pkgs; [
     # Utils
     bat
+    btop
+    deno
+    dive
     duckdb
     entr
     fd
+    ffmpeg
     github-cli
     htop
+    httpie
+    jq
     lsd
     ripgrep
+    tree
+    watch
     yt-dlp
     zoxide # Frecency based directory navigation
     
@@ -357,15 +365,13 @@ in
       };
 
       "ssh" = ''
-        function ssh
-            if test -z "$SSH_AGENT_PID"
-                eval $(ssh-agent -c)
-                ssh-add ~/.ssh/id_rsa
-                ssh-add ~/.ssh/id_ed25519
-            end
+          if test -z "$SSH_AGENT_PID"
+              eval $(ssh-agent -c)
+              ssh-add ~/.ssh/id_rsa
+              ssh-add ~/.ssh/id_ed25519
+          end
 
-            command ssh $argv
-        end
+          command ssh $argv
       '';
 
       "command_exists" = ''
