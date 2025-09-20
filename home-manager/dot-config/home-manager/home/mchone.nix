@@ -19,6 +19,7 @@ in
   
   home.packages = with pkgs; [
     # Utils
+    asciinema
     bat
     btop
     deno
@@ -32,6 +33,7 @@ in
     httpie
     jq
     lsd
+    pre-commit
     ripgrep
     tree
     watch
@@ -148,11 +150,12 @@ in
       };
 
       "profile sai-dev" = {
+        sso_start_url = "https://allies.awsapps.com/start";
+        sso_region = "us-east-1";
         sso_account_id = "729161019481";
         sso_role_name = "AdministratorAccess";
         region = "us-east-1";
-        sso_start_url = "https://allies.awsapps.com/start";
-        sso_region = "us-east-1";
+        output = "json";
       };
     };
   };
@@ -184,6 +187,7 @@ in
         st = "status";
         p = "push";
         l = "pull";
+        ls = "ls-remote";
         main = ''!f() { if git ls-remote --exit-code --heads origin master >/dev/null 2>&1; then git checkout master; else git checkout main; fi; }; f'';
         dad = "!curl -H 'Accept: text/plain' https://icanhazdadjoke.com";
       };
@@ -436,7 +440,6 @@ in
 
       if test (uname) = 'Darwin'
         source /opt/homebrew/opt/asdf/libexec/asdf.fish
-        set -gx DOCKER_HOST "unix:///Users/bmchone/.colima/default/docker.sock"
       end
 
       add_to_path_if_exists "$HOME/go/bin"
@@ -445,6 +448,30 @@ in
 
       starship init fish | source
       zoxide init fish | source
+
+      function __auto_source_venv --on-variable PWD --description "Activate/Deactivate virtualenv on directory change"
+        status --is-command-substitution; and return
+
+        # Check if we are inside a git directory
+        if git rev-parse --show-toplevel &>/dev/null
+          set gitdir (realpath (git rev-parse --show-toplevel))
+          set cwd (pwd -P)
+          # While we are still inside the git directory, find the closest
+          # virtualenv starting from the current directory.
+          while string match "$gitdir*" "$cwd" &>/dev/null
+            if test -e "$cwd/.venv/bin/activate.fish"
+              source "$cwd/.venv/bin/activate.fish" &>/dev/null 
+              return
+            else
+              set cwd (path dirname "$cwd")
+            end
+          end
+        end
+        # If virtualenv activated but we are not in a git directory, deactivate.
+        if test -n "$VIRTUAL_ENV"
+          deactivate
+        end
+      end
     '';
 
     shellAbbrs = {
