@@ -1,7 +1,7 @@
 { config, pkgs, username, homeDirectory, ... }:
 
 let
-  linuxPkgs = import ./linux.nix { inherit config pkgs; };
+  linux = import ./linux.nix { inherit config pkgs; };
 in
 {
   home.username = username;
@@ -50,17 +50,9 @@ in
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-  ] ++ linuxPkgs.pkgs;
+  ] ++ linux.pkgs;
 
   home.file = {
-    ".config/rofimoji.rc".text = ''
-      selector = fuzzel
-    '';
-
-    ".config/sway/config".source = ../../../../sway/config;
-    ".config/sway/wallpaper.png".source = ../../../../sway/wallpaper.png;
-    ".config/i3status.conf".source = ../../../../sway/i3status.conf;
-
     ".config/fish/themes/Dracula Official.theme".text = ''
       # Dracula Color Palette
       #
@@ -117,9 +109,8 @@ in
       fish_pager_color_secondary_prefix 8be9fd
       fish_pager_color_secondary_completion f8f8f2
       fish_pager_color_secondary_description 6272a4
-
     '';
-  };
+  } // linux.file;
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
@@ -154,6 +145,14 @@ in
       default = {
         region = "us-east-2";
         output = "json";
+      };
+
+      "profile sai-dev" = {
+        sso_account_id = "729161019481";
+        sso_role_name = "AdministratorAccess";
+        region = "us-east-1";
+        sso_start_url = "https://allies.awsapps.com/start";
+        sso_region = "us-east-1";
       };
     };
   };

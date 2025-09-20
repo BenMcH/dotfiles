@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Slack
+Exec=chromium --app=http://sourceallies.slack.com/
+Icon=slack
+NoDisplay=false
