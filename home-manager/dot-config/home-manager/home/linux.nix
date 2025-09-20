@@ -16,5 +16,7 @@
 
     ".local/share/applications/slack.desktop".source = ./desktop-entries/slack.desktop;
     ".local/share/applications/discord.desktop".source = ./desktop-entries/discord.desktop;
+    ".local/share/icons/hicolor/256x256/apps/discord.png".source = ./desktop-entries/discord.png;
+    ".local/share/icons/hicolor/256x256/apps/slack.png".source = ./desktop-entries/slack.png;
   } else {};
 }

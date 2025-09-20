@@ -14,3 +14,15 @@ Finally, add any folders you do not want symlinked to the top of the `install.sh
 ## Submodules
 
 There are certain cases where it is helpful to have a separate repo for base config (Like [neovim](./nvim/.config/nvim/). In these cases, a submodule is used. The install script will handle initializing and updating these submodules.
+
+
+TODO:
+
+asdf
+nvim
+fish
+zsh
+
+ruby?
+deno?
+node?
