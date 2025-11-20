@@ -32,6 +32,8 @@ in
     htop
     httpie
     jq
+    lazydocker
+    lazygit
     lsd
     pre-commit
     ripgrep
