@@ -330,7 +330,7 @@ in
       set -s copy-command 'wl-copy'
       if-shell "uname | grep -q Darwin" "set -s copy-command 'pbcopy'"
 
-      set -g @dracula-show-powerline false
+#set -g @dracula-show-powerline false
       set -g @dracula-show-flags true
       set -g @dracula-plugins "git time"
       set -g @dracula-show-left-icon session
@@ -442,6 +442,7 @@ in
 
       if test (uname) = 'Darwin'
         source /opt/homebrew/opt/asdf/libexec/asdf.fish
+        set -gx DYLD_LIBRARY_PATH /opt/homebrew/lib $DYLD_LIBRARY_PATH
       end
 
       add_to_path_if_exists "$HOME/go/bin"
@@ -480,6 +481,8 @@ in
       ls = "lsd";
       nvm = "fnm";
       "fish-reload" = "source ~/.config/fish/config.fish";
+      "ci" = "code-insiders"'
+      "cpy" = "copilot --yolo"
     };
   };
 }
