@@ -165,9 +165,6 @@ in
   programs.git = {
     enable = true;
 
-    userName = "Ben McHone";
-    userEmail = "ben@mchone.dev";
-
     includes = [
       {
         condition = "gitdir:~/projects/";
@@ -175,10 +172,14 @@ in
       }
     ];
 
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Ben McHone";
+        email = "ben@mchone.dev";
+      };
       core = {
         excludesfile = "~/.gitignore";
-        fsmonitor = true;
+        # fsmonitor = true;
         untrackedCache = true;
       };
 
@@ -247,6 +248,7 @@ in
 
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
 
     extraConfig = ''
       IgnoreUnknown UseKeychain
@@ -481,8 +483,8 @@ in
       ls = "lsd";
       nvm = "fnm";
       "fish-reload" = "source ~/.config/fish/config.fish";
-      "ci" = "code-insiders"'
-      "cpy" = "copilot --yolo"
+      "ci" = "code-insiders";
+      "cpy" = "copilot --yolo";
     };
   };
 }
