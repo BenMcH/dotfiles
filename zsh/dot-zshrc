@@ -147,3 +147,8 @@ if [ $(uname) = "Darwin" ]; then
     . /opt/homebrew/opt/asdf/libexec/asdf.sh
     export DOCKER_HOST="unix:///Users/bmchone/.colima/default/docker.sock"
 fi
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/mchone/.lmstudio/bin"
+# End of LM Studio CLI section
+

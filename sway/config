@@ -49,7 +49,7 @@ floating_modifier $mod
 # or left-clicking anywhere into the window while holding the floating modifier.
 # tiling_drag modifier titlebar
 
-bindsym $mod+i exec rofimoji
+bindsym $mod+i exec rofimoji -a copy
 
 # kill focused window
 bindsym $mod+Shift+q kill
