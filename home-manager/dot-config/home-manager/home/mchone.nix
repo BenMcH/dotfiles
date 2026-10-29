@@ -1,13 +1,15 @@
-{ lib, pkgs, username, homeDirectory, ... }:
+{ config, lib, pkgs, username, homeDirectory, ... }:
 
 {
   imports = [
     ./fish.nix
+    ./ghostty.nix
     ./git.nix
     ./linux.nix
     ./ssh.nix
     ./starship.nix
     ./tmux.nix
+    ./zsh.nix
   ];
 
   home.username = username;
@@ -34,7 +36,6 @@
     fd
     ffmpeg
     fnm
-    fzf
     github-cli
     htop
     httpie
@@ -46,16 +47,18 @@
     ripgrep
     tree
     watch
-    yazi
     yt-dlp
-    zellij
-    zoxide # Frecency based directory navigation
   ];
 
   home.sessionVariables = {
     PAGER = "bat -p";
     EDITOR = "nvim";
     # CHROME_EXECUTABLE = "${pkgs.chromium}/bin/chromium";
+  } // lib.optionalAttrs pkgs.stdenv.isDarwin {
+    DOCKER_HOST = "unix://${config.home.homeDirectory}/.colima/default/docker.sock";
+    # WeasyPrint loads pango/gobject from Homebrew. The fallback path is only
+    # searched when a library isn't found normally, so Nix binaries are unaffected.
+    DYLD_FALLBACK_LIBRARY_PATH = "/opt/homebrew/lib";
   };
 
   home.sessionPath = [
@@ -64,12 +67,20 @@
     "$HOME/go/bin"
     "$HOME/.bun/bin"
     "$HOME/.opencode/bin"
+    "$HOME/.lmstudio/bin"
   ] ++ lib.optionals pkgs.stdenv.isDarwin [
     "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
   ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # `nh home switch` applies this config and shows what changed.
+  programs.nh = {
+    enable = true;
+    flake = "${config.home.homeDirectory}/.dotfiles/home-manager/dot-config/home-manager";
+  };
 
   programs.awscli = {
     enable = true;
@@ -92,4 +103,20 @@
   };
 
   programs.uv.enable = true;
+
+  programs.zoxide.enable = true; # Frecency based directory navigation
+  programs.fzf.enable = true;
+
+  programs.yazi = {
+    enable = true;
+    shellWrapperName = "y";
+  };
+
+  # Integrations would auto-launch zellij in every new shell.
+  programs.zellij = {
+    enable = true;
+    enableFishIntegration = false;
+    enableZshIntegration = false;
+    enableBashIntegration = false;
+  };
 }

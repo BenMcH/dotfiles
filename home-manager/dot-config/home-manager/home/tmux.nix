@@ -38,12 +38,10 @@
       setw -g pane-base-index 1
       set -g renumber-windows on
 
-      # Cross-platform clipboard: mac -> pbcopy, linux -> wl-copy / xclip
-      if-shell "uname | grep -q Darwin" \
-        "set -s copy-command 'pbcopy'" \
-        "if-shell 'command -v wl-copy' \
-          \"set -s copy-command 'wl-copy'\" \
-          \"set -s copy-command 'xclip -selection clipboard -in'\""
+      # Clipboard: pbcopy on macOS; wl-copy on Wayland, else xclip
+      ${if pkgs.stdenv.isDarwin
+        then "set -s copy-command 'pbcopy'"
+        else "if-shell 'command -v wl-copy' \"set -s copy-command 'wl-copy'\" \"set -s copy-command 'xclip -selection clipboard -in'\""}
 
       # Vim-style visual selection + yank in copy mode
       bind-key -T copy-mode-vi v send-keys -X begin-selection

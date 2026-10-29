@@ -51,13 +51,18 @@
         builtins.concatLists (
           builtins.attrValues (
             builtins.mapAttrs (system: systemConfig:
-              builtins.attrValues (
-                builtins.mapAttrs (username: userConfig:
-                  {
-                    name = "${username}@${system}";
-                    value = mkHomeConfiguration system username userConfig;
-                  }
-                ) systemConfig.users
+              builtins.concatLists (
+                builtins.attrValues (
+                  builtins.mapAttrs (username: userConfig:
+                    let
+                      value = mkHomeConfiguration system username userConfig;
+                    in [
+                      { name = "${username}@${system}"; inherit value; }
+                      # Lets `nh home switch` and `home-manager switch` find the config by $USER.
+                      { name = username; inherit value; }
+                    ]
+                  ) systemConfig.users
+                )
               )
             ) systems
           )

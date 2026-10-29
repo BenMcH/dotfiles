@@ -128,14 +128,6 @@
 
         echo "Activated venv"
       '';
-      "y" = ''
-        set tmp (mktemp -t "yazi-cwd.XXXXXX")
-        command yazi $argv --cwd-file="$tmp"
-        if read -z cwd < "$tmp"; and [ "$cwd" != "$PWD" ]; and test -d "$cwd"
-          builtin cd -- "$cwd"
-        end
-        rm -f -- "$tmp"
-      '';
     };
 
     interactiveShellInit = ''
@@ -145,12 +137,6 @@
       if test -n "$XDG_SESSION_TYPE" && test "$XDG_SESSION_TYPE" = "wayland"
           set -gx MOZ_ENABLE_WAYLAND 1
       end
-
-      if test (uname) = 'Darwin'
-        set -gx DYLD_LIBRARY_PATH /opt/homebrew/lib $DYLD_LIBRARY_PATH
-      end
-
-      zoxide init fish | source
 
       function __auto_source_venv --on-variable PWD --description "Activate/Deactivate virtualenv on directory change"
         status --is-command-substitution; and return
