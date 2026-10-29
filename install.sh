@@ -11,9 +11,6 @@ mkdir -p ~/.ssh/
 
 _stow home-manager
 
-_stow zsh
-_stow fish
-
 command -v nvim > /dev/null && _stow nvim
 
 if [ $(uname) = "Linux" ]; then

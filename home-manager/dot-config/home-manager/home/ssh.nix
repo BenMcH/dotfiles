@@ -1,4 +1,4 @@
-{ ... }:
+{ config, lib, pkgs, ... }:
 
 {
   programs.ssh = {
@@ -11,7 +11,7 @@
       UseKeychain yes
       ForwardAgent yes
 
-      Include /Users/bmchone/.colima/ssh_config
+      ${lib.optionalString pkgs.stdenv.isDarwin "Include ${config.home.homeDirectory}/.colima/ssh_config"}
       Include configs/*
     '';
 

@@ -56,7 +56,6 @@
     PAGER = "bat -p";
     EDITOR = "nvim";
     # CHROME_EXECUTABLE = "${pkgs.chromium}/bin/chromium";
-    GOPAH = "${pkgs.go}/lib/go";
   };
 
   home.sessionPath = [
