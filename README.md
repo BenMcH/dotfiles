@@ -18,7 +18,6 @@ There are certain cases where it is helpful to have a separate repo for base con
 
 TODO:
 
-asdf
 nvim
 fish
 zsh

@@ -22,12 +22,15 @@ in
     asciinema
     bat
     btop
+    cloc
     deno
     dive
     duckdb
     entr
     fd
     ffmpeg
+    fnm
+    fzf
     github-cli
     htop
     httpie
@@ -39,7 +42,9 @@ in
     ripgrep
     tree
     watch
+    yazi
     yt-dlp
+    zellij
     zoxide # Frecency based directory navigation
     
     # # It is sometimes useful to fine-tune packages, for example, by applying
@@ -174,6 +179,7 @@ in
   
   programs.git = {
     enable = true;
+    lfs.enable = true;
 
     includes = [
       {
@@ -203,13 +209,7 @@ in
         ls = "ls-remote";
         main = ''!f() { if git ls-remote --exit-code --heads origin master >/dev/null 2>&1; then git checkout master; else git checkout main; fi; }; f'';
         dad = "!curl -H 'Accept: text/plain' https://icanhazdadjoke.com";
-      };
-
-      "filter \"lfs\"" = {
-        clean = "git-lfs clean -- %f";
-        smudge = "git-lfs smudge -- %f";
-        process = "git-lfs filter-process";
-        required = true;
+        rmw = "worktree remove";
       };
 
       branch.sort = "-committerdate";
@@ -267,7 +267,7 @@ in
       ForwardAgent yes
 
       Include /Users/bmchone/.colima/ssh_config
-      Include config/*
+      Include configs/*
     '';
 
     matchBlocks = {
@@ -303,8 +303,6 @@ in
       };
 
       shell = {
-        fish_indicator = "󰈺 ";
-        powershell_indicator = "_";
         unknown_indicator = "mystery shell";
         style = "cyan";
         disabled = false;
@@ -334,11 +332,17 @@ in
 
   programs.tmux = {
     enable = true;
-    terminal = "screen-256color";
+    terminal = "tmux-256color";
     prefix = "C-b";
+    shell = "${pkgs.fish}/bin/fish";
     extraConfig = ''
+      set -g default-command ${pkgs.fish}/bin/fish
+
+      # Truecolor (24-bit) support
+      set -ga terminal-overrides ",*256col*:Tc"
+
       unbind r
-      bind r source-file ~/.config/tmux/tmux.conf
+      bind r source-file ~/.config/tmux/tmux.conf \; display "Reloaded tmux.conf"
 
       setw -g mode-keys vi
 
@@ -347,26 +351,39 @@ in
       bind-key k select-pane -U
       bind-key l select-pane -R
 
-      set -s copy-command 'wl-copy'
-      if-shell "uname | grep -q Darwin" "set -s copy-command 'pbcopy'"
+      # Splits and new windows open in the current pane's directory
+      bind '"' split-window -v -c "#{pane_current_path}"
+      bind % split-window -h -c "#{pane_current_path}"
+      bind c new-window -c "#{pane_current_path}"
 
-#set -g @dracula-show-powerline false
-      set -g @dracula-show-flags true
-      set -g @dracula-plugins "git time"
-      set -g @dracula-show-left-icon session
+      # Faster escape (helps vim responsiveness inside tmux)
+      set -sg escape-time 10
+
+      # Larger scrollback
+      set -g history-limit 50000
+
+      # 1-based indexing, renumber on close
+      set -g base-index 1
+      setw -g pane-base-index 1
+      set -g renumber-windows on
+
+      # Cross-platform clipboard: mac -> pbcopy, linux -> wl-copy / xclip
+      if-shell "uname | grep -q Darwin" \
+        "set -s copy-command 'pbcopy'" \
+        "if-shell 'command -v wl-copy' \
+          \"set -s copy-command 'wl-copy'\" \
+          \"set -s copy-command 'xclip -selection clipboard -in'\""
+
+      # Vim-style visual selection + yank in copy mode
+      bind-key -T copy-mode-vi v send-keys -X begin-selection
+      bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel
+
       set -g status-position top
+      set -g mouse
     '';
 
     plugins = with pkgs.tmuxPlugins; [
       sensible
-      {
-        plugin = dracula;
-        extraConfig = "";
-      }
-      {
-        plugin = vim-tmux-navigator;
-        extraConfig = "";
-      }
     ];
   };
 
@@ -460,7 +477,6 @@ in
       end
 
       if test (uname) = 'Darwin'
-        source /opt/homebrew/opt/asdf/libexec/asdf.fish
         set -gx DYLD_LIBRARY_PATH /opt/homebrew/lib $DYLD_LIBRARY_PATH
       end
 
@@ -489,6 +505,8 @@ in
           deactivate
         end
       end
+
+      set -gx CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR 1
     '';
 
     shellAbbrs = {
