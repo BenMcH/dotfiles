@@ -1,11 +1,11 @@
-{ config, pkgs, ... }:
+{ lib, pkgs, ... }:
 
-{
-  pkgs = if pkgs.stdenv.isLinux then with pkgs; [
+lib.mkIf pkgs.stdenv.isLinux {
+  home.packages = with pkgs; [
     rofimoji # Emoji selector (integrated with fuzzel)
-  ] else [ ];
+  ];
 
-  file = if pkgs.stdenv.isLinux then {
+  home.file = {
     ".config/rofimoji.rc".text = ''
       selector = fuzzel
     '';
@@ -18,5 +18,21 @@
     ".local/share/applications/discord.desktop".source = ./desktop-entries/discord.desktop;
     ".local/share/icons/hicolor/256x256/apps/discord.png".source = ./desktop-entries/discord.png;
     ".local/share/icons/hicolor/256x256/apps/slack.png".source = ./desktop-entries/slack.png;
-  } else {};
+  };
+
+  programs.fuzzel = {
+    enable = true;
+
+    settings = {
+      colors = {
+        background = "282a36dd";
+        text = "f8f8f2ff";
+        match = "8be9fdff";
+        selection-match = "8be9fdff";
+        selection = "44475add";
+        selection-text = "f8f8f2ff";
+        border = "bd93f9ff";
+      };
+    };
+  };
 }
