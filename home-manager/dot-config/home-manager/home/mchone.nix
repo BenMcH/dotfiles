@@ -1,4 +1,4 @@
-{ config, pkgs, username, homeDirectory, ... }:
+{ config, lib, pkgs, username, homeDirectory, ... }:
 
 let
   linux = import ./linux.nix { inherit config pkgs; };
@@ -138,6 +138,16 @@ in
     # CHROME_EXECUTABLE = "${pkgs.chromium}/bin/chromium";
     GOPAH = "${pkgs.go}/lib/go";
   };
+
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "$HOME/.cargo/bin"
+    "$HOME/go/bin"
+    "$HOME/.bun/bin"
+    "$HOME/.opencode/bin"
+  ] ++ lib.optionals pkgs.stdenv.isDarwin [
+    "/opt/homebrew/bin"
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -370,15 +380,6 @@ in
     };
 
     functions = {
-      "add_to_path_if_exists" = {
-        body = ''
-          if test -d "$to_check"
-            fish_add_path "$to_check"
-          end
-        '';
-        argumentNames = [ "to_check" ];
-      };
-
       "ssh" = ''
           if test -z "$SSH_AGENT_PID"
               eval $(ssh-agent -c)
@@ -463,11 +464,6 @@ in
         set -gx DYLD_LIBRARY_PATH /opt/homebrew/lib $DYLD_LIBRARY_PATH
       end
 
-      add_to_path_if_exists "$HOME/go/bin"
-      add_to_path_if_exists "$HOME/.cargo/bin"
-      add_to_path_if_exists "$HOME/.local/bin"
-
-      starship init fish | source
       zoxide init fish | source
 
       function __auto_source_venv --on-variable PWD --description "Activate/Deactivate virtualenv on directory change"
